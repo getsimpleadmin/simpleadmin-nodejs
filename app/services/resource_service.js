@@ -1,13 +1,13 @@
 class ResourceService {
-  constructor(modelKlass, modelFields) {
-    this.modelKlass  = modelKlass
+  constructor(modelClass, modelFields) {
+    this.modelClass  = modelClass
     this.modelFields = modelFields
   }
 
   async indexAction() {
     let result;
 
-    await this.modelKlass.findAll().then((resources) => {
+    await this.modelClass.findAll().then((resources) => {
       result = resources.map((resource) => {
         return resource.dataValues
       })

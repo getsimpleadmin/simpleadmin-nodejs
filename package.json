@@ -1,6 +1,6 @@
 {
   "name": "simpleadmin",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "repository": "git://github.com/simpleadmin/simpleadmin-nodejs",
   "description": "SimpleAdmin - Dashboard for modern website without wasting time",
   "main": "index.js",

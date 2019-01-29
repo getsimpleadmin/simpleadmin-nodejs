@@ -6,18 +6,18 @@ class EntityService {
     let result = [];
 
     Object.keys(models).forEach(modelName => {
-      const modelKlass = helper.modelKlass(db, modelName);
-      
-      if(!modelKlass) {
+      const modelClass = helper.modelClass(db, modelName);
+
+      if(!modelClass) {
         throw new Error(`Model with name ${modelName} doesn't exist`);
       }
-      
-      const modelColumns = Object.keys(modelKlass.attributes).map(modelColumn => ({
-          name: modelKlass.attributes[modelColumn].fieldName,
-          type: modelKlass.attributes[modelColumn].type.key}));
+
+      const modelColumns = Object.keys(modelСlass.attributes).map(modelColumn => ({
+          name: modelClass.attributes[modelColumn].fieldName,
+          type: modelClass.attributes[modelColumn].type.key}));
 
       result.push({
-        name: modelKlass.name,
+        name:    modelClass.name,
         columns: modelColumns
       })
     })
@@ -28,17 +28,17 @@ class EntityService {
   }
 
   showAction(db, resourceName) {
-    const modelKlass = helper.modelKlass(db, resourceName);
+    const modelСlass = helper.modelСlass(db, resourceName);
 
-    const modelColumns = Object.keys(modelKlass.attributes).map(modelColumn => ({
-        name: modelKlass.attributes[modelColumn].fieldName,
-        type: modelKlass.attributes[modelColumn].type.key}));
+    const modelColumns = Object.keys(modelСlass.attributes).map(modelColumn => ({
+        name: modelСlass.attributes[modelColumn].fieldName,
+        type: modelСlass.attributes[modelColumn].type.key}));
 
     return {
-      reflections:'',
-      name: modelKlass.name,
-      columns: modelColumns,
-      column_names: Object.keys(modelKlass.attributes)
+      reflections:  '',
+      name:         modelСlass.name,
+      columns:      modelColumns,
+      column_names: Object.keys(modelClass.attributes)
     }
   }
 }
