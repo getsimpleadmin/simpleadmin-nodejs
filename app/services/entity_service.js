@@ -6,17 +6,17 @@ class EntityService {
         result = [];
 
     Object.keys(models).forEach(modelName => {
-      let modelKlass = helper.modelKlass(db, modelName);
+      let modelClass = helper.modelClass(db, modelName);
 
-      let modelColumns = Object.keys(modelKlass.attributes).map(modelColumn => {
+      let modelColumns = Object.keys(modelClass.attributes).map(modelColumn => {
         return {
-          name: modelKlass.attributes[modelColumn].fieldName,
-          type: modelKlass.attributes[modelColumn].type.key
+          name: modelClass.attributes[modelColumn].fieldName,
+          type: modelClass.attributes[modelColumn].type.key
         }
       })
 
       result.push({
-        name: modelKlass.name,
+        name:    modelClass.name,
         columns: modelColumns
       })
     })
@@ -27,18 +27,18 @@ class EntityService {
   }
 
   showAction(db, resourceName) {
-    let modelKlass = helper.modelKlass(db, resourceName);
+    let modelClass = helper.modelClass(db, resourceName);
 
-    let modelColumns = Object.keys(modelKlass.attributes).map(modelColumn => {
+    let modelColumns = Object.keys(modelClass.attributes).map(modelColumn => {
       return {
-        name: modelKlass.attributes[modelColumn].fieldName,
-        type: modelKlass.attributes[modelColumn].type.key
+        name: modelClass.attributes[modelColumn].fieldName,
+        type: modelClass.attributes[modelColumn].type.key
       }
     })
 
     return {
-      name:         modelKlass.name,
-      column_names: Object.keys(modelKlass.attributes),
+      name:         modelClass.name,
+      column_names: Object.keys(modelClass.attributes),
       columns:      modelColumns,
       reflections:  ''
 
