@@ -7,7 +7,11 @@ class EntityService {
 
     Object.keys(models).forEach(modelName => {
       const modelKlass = helper.modelKlass(db, modelName);
-
+      
+      if(!modelKlass) {
+        throw new Error(`Model with name ${modelName} doesn't exist`);
+      }
+      
       const modelColumns = Object.keys(modelKlass.attributes).map(modelColumn => ({
           name: modelKlass.attributes[modelColumn].fieldName,
           type: modelKlass.attributes[modelColumn].type.key}));
