@@ -19,9 +19,7 @@ class SimpleAdmin {
       method: 'GET',
       path: '/simple_admin/version',
       handler: function(request, h) {
-        if (helper.isSecretKeyIsInValid(request)) {
-          throw Boom.forbidden('Invalid secret key')
-        }
+        helper.isRequestAuthorized(request.headers['simpleadmin-secret-key'])
 
         return {
           version: SimpleAdmin.version
@@ -54,11 +52,9 @@ class SimpleAdmin {
       method: 'GET',
       path: '/simple_admin/resources',
       handler: function(request, h) {
-        if (helper.isSecretKeyIsInValid(request)) {
-          throw Boom.forbidden('Invalid secret key')
-        }
+        helper.isRequestAuthorized(request.headers['simpleadmin-secret-key'])
 
-        return new resourceService.klass(helper.modelKlass(_this.db, request.query.model_klass_name)).indexAction()
+        return new resourceService.klass(helper.modelClass(_this.db, request.query.model_klass_name)).indexAction()
       }
     })
 
@@ -66,16 +62,14 @@ class SimpleAdmin {
       method: 'GET',
       path: '/simple_admin/resources/{id}',
       handler: async function(request ,h) {
-        if (helper.isSecretKeyIsInValid(request)) {
-          throw Boom.forbidden('Invalid secret key')
-        }
+        helper.isRequestAuthorized(request.headers['simpleadmin-secret-key'])
 
         let result = {},
             resourceAttributes;
 
-        let modelKlassName = request.query.model_klass_name;
+        let modelClassName = request.query.model_klass_name;
 
-        await helper.modelKlass(_this.db, modelKlassName).findById(request.params.id).then((resource) => {
+        await helper.modelClass(_this.db, modelClassName).findById(request.params.id).then((resource) => {
           resourceAttributes = resource.dataValues
         });
 
@@ -91,14 +85,12 @@ class SimpleAdmin {
       method: 'POST',
       path: '/simple_admin/resources',
       handler: async function(request ,h) {
-        if (helper.isSecretKeyIsInValid(request)) {
-          throw Boom.forbidden('Invalid secret key')
-        }
+        helper.isRequestAuthorized(request.headers['simpleadmin-secret-key'])
 
         let result;
-        let modelKlassName = request.payload.model_klass_name;
+        let modelClassName = request.payload.model_klass_name;
 
-        await helper.modelKlass(_this.db, modelKlassName).create(_this.resourceParams(request.payload)).then((resource) => {
+        await helper.modelClass(_this.db, modelClassName).create(_this.resourceParams(request.payload)).then((resource) => {
           result = resource;
         });
 
@@ -110,11 +102,9 @@ class SimpleAdmin {
       method: 'PUT',
       path: '/simple_admin/resources/{id}',
       handler: async function(request ,h) {
-        if (helper.isSecretKeyIsInValid(request)) {
-          throw Boom.forbidden('Invalid secret key')
-        }
+        helper.isRequestAuthorized(request.headers['simpleadmin-secret-key'])
 
-        return helper.modelKlass(_this.db, request.payload.model_klass_name).update(
+        return helper.modelClass(_this.db, request.payload.model_klass_name).update(
           _this.resourceParams(request.payload),
           { where: { id: request.params.id } }
         )
@@ -125,11 +115,9 @@ class SimpleAdmin {
       method: 'DELETE',
       path: '/simple_admin/resources/{id}',
       handler: async function(request ,h) {
-        if (helper.isSecretKeyIsInValid(request)) {
-          throw Boom.forbidden('Invalid secret key')
-        }
+        helper.isRequestAuthorized(request.headers['simpleadmin-secret-key'])
 
-        await helper.modelKlass(_this.db, request.payload.model_klass_name).destroy({ where: { id: request.params.id } })
+        await helper.modelClass(_this.db, request.payload.model_klass_name).destroy({ where: { id: request.params.id } })
 
         return {}
       }
@@ -143,9 +131,7 @@ class SimpleAdmin {
       method: 'GET',
       path: '/simple_admin/entities',
       handler: function(request ,h) {
-        if (helper.isSecretKeyIsInValid(request)) {
-          throw Boom.forbidden('Invalid secret key')
-        }
+        helper.isRequestAuthorized(request.headers['simpleadmin-secret-key'])
 
         return entityService.instance.indexAction(_this.db)
       }
@@ -155,9 +141,7 @@ class SimpleAdmin {
       method: 'GET',
       path: '/simple_admin/entities/{id}',
       handler: function(request ,h) {
-        if (helper.isSecretKeyIsInValid(request)) {
-          throw Boom.forbidden('Invalid secret key')
-        }
+        helper.isRequestAuthorized(request.headers['simpleadmin-secret-key'])
 
         return entityService.instance.showAction(_this.db, request.params.id)
       }
