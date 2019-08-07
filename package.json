@@ -1,0 +1,22 @@
+{
+  "name": "simpleadmin",
+  "version": "1.6.1",
+  "repository": "git://github.com/simpleadmin/simpleadmin-nodejs",
+  "description": "Create admin dashboards for Web / Mobile / API applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "boom": "^7.3.0",
+    "luxon": "^1.17.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}

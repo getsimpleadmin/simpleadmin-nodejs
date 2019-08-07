@@ -1,0 +1,7 @@
+/node_modules/*
+database.js
+server.js
+
+/migrations/*
+/config/*
+/models/*
